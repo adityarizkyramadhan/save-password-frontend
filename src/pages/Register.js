@@ -2,7 +2,7 @@ import { Button, Container, Input, Text, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import api from "../api";
 
-const Login = () => {
+const Register = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
 
@@ -16,17 +16,17 @@ const Login = () => {
     event.preventDefault();
     try {
       setLoading(true);
-      const { data } = await api.post("/login", {
+      const { data } = await api.post("/register", {
         username: formData.username,
         password: formData.password,
       });
       localStorage.setItem("token", `Bearer ${data.data.token}`);
-      toast({ title: "Login Berhasil", status: "success" });
+      toast({ title: "Register Berhasil", status: "success" });
       setTimeout(() => {
         window.location.reload();
       }, 1000);
     } catch (error) {
-      toast({ title: "Username atau password salah", status: "error" });
+      toast({ title: "Terjadi Kesalahan", status: "error" });
     } finally {
       setLoading(false);
     }
@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <Container>
       <Text fontSize="4xl" mb="4">
-        Login
+        Register
       </Text>
       <form onSubmit={handleSubmit}>
         <Input
@@ -62,11 +62,11 @@ const Login = () => {
           type="submit"
           colorScheme="blue"
         >
-          Login
+          Register
         </Button>
       </form>
     </Container>
   );
 };
 
-export default Login;
+export default Register;
